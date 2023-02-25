@@ -1,4 +1,4 @@
-import Zeyo from "zeyo"
+import { Zeyo } from "zeyo"
 import App from "../app"
 /**
  * comanetario antes da classe
@@ -13,5 +13,5 @@ export default abstract class Component {
     constructor(app: App) {
         this.app = app
     }
-    abstract create: (obj?: any) => Promise<Zeyo>
+    abstract create(obj?: any): Promise<Zeyo>
 }
