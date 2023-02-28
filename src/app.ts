@@ -1,15 +1,15 @@
 import Page from "./pages"
-type PageConstructor = new (...args: any) => Page
+import Route from "./router/_route"
+type PageConstructor<P = Page> = new (...args: any) => P
 export default class App {
-    pages: PageConstructor[]
+    pages: Page[]
     root: HTMLElement = document.querySelector("#root")!
-    route: any// = Route
+    route: Route
     repository: any
     constructor(pages: PageConstructor[], repository: any){
-        this.pages = pages
+        this.pages = pages.map(p => new p(this))
         this.repository = repository
-    }
-    init(){
+        this.route = new Route(this)
         this.route.init()
     }
 }

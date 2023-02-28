@@ -2,9 +2,10 @@
   "name": "blank",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,14 @@
   },
   "homepage": "https://github.com/zeyodev/blank#readme",
   "dependencies": {
+    "express": "^4.18.2",
     "zeyo": "github:zeyodev/zeyo"
+  },
+  "type": "module",
+  "devDependencies": {
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
