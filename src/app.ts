@@ -1,15 +1,16 @@
 import Page from "./pages"
-import Route from "./router/_route"
+import Plugins from "./plugins"
 type PageConstructor<P = Page> = new (...args: any) => P
-export default class App {
+export default class App extends Plugins {
     pages: Page[]
     root: HTMLElement = document.querySelector("#root")!
-    route: Route
     repository: any
-    constructor(pages: PageConstructor[], repository: any){
+    constructor(){
+        super()
+        this.pages = []
+    }
+
+    setPages(...pages: PageConstructor[]) {
         this.pages = pages.map(p => new p(this))
-        this.repository = repository
-        this.route = new Route(this)
-        this.route.init()
     }
 }
