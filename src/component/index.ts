@@ -1,5 +1,6 @@
 import { Zeyo } from "zeyo"
 import App from "../app"
+import { Watcher } from "./watcher"
 /**
  * comanetario antes da classe
  */
@@ -14,4 +15,15 @@ export default abstract class Component {
         this.app = app
     }
     abstract create(obj?: any): Promise<Zeyo>
+    watch(obj: any): [any, Component] {
+        const newComponent = new Proxy(this, {
+            set: (target, key, value) => {
+                if (key === "main")
+                    target.main.element.parentElement?.replaceChild(value.element, target.main.element);
+                target[key as keyof typeof target] = value
+                return true
+            }
+        })
+        return [new Proxy(obj, new Watcher(null, "", newComponent)), newComponent]
+    }
 }
