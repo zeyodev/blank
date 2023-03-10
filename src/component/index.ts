@@ -15,7 +15,7 @@ export default abstract class Component {
         this.app = app
     }
     abstract create(obj?: any): Promise<Zeyo>
-    watch(obj: any): [any, Component] {
+    watch<O>(obj: O): [O, this] {
         const newComponent = new Proxy(this, {
             set: (target, key, value) => {
                 if (key === "main")
