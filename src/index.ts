@@ -3,6 +3,6 @@ import Root from "./pages/root";
 import Route from "./router/_route";
 
 const app = new App()
-app.setRouter(new Route(app))
-    .setRepository({})
+app.setRepository({})
     .setPages(Root)
+    .setRouter(new Route(app))

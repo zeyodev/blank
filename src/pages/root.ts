@@ -1,5 +1,7 @@
 import Z, { Zeyo } from "zeyo";
 import Page from ".";
+import CardSimple from "../component/cardSimple";
+import ListaHorizontal from "../component/listaHorizontal";
 
 export default class Root extends Page {
     route: string = "/"
@@ -9,8 +11,17 @@ export default class Root extends Page {
     params?: { [key: string]: string; } | undefined;
     main: Zeyo = Z("div");
     async create(obj?: any): Promise<Zeyo> {
+        const [itens, horizontal] = new ListaHorizontal(this.app, CardSimple).watch({
+            adapter: "item",
+            title: "Itens",
+            list: ([] as {title: string, description: string}[])
+        })
+        itens.list.push({title: "Teste0", description: "Testando lista"})
+        itens.list.push({title: "Teste1", description: "Testando lista"})
+        itens.list.push({title: "Teste2", description: "Testando lista"})
         return this.main = Z("main").children(
-            Z("h1").text("Inicio de tudo")
+            Z("h1").text("Inicio de tudo"),
+            await horizontal.create(itens)
         )
     }
 }

@@ -9,7 +9,8 @@ export default class Build {
     async build(path: string) {
         this.app.root.innerHTML = ""
         const params: { [key: string]: string } = {}
-        const page = this.app.pages.find(p => {
+        console.log(this.app)
+        const page = this.app.pages?.find(p => {
             if (p.route === path) return true
             else {
                 const route = p.route.split("/")
