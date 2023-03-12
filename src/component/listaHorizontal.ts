@@ -10,7 +10,7 @@ export default class ListaHorizontal extends Component {
         super(app)
         this.card = card
     }
-    async create(obj: {list: {title: string, description: string}[], adapter: any, title: string}): Promise<Zeyo> {
+    async create(obj: {adapter: any, title: string, list: {title: string, description: string}[]}): Promise<Zeyo> {
         return this.main = Z("div").children(
             Z("h2").text(obj.title),
             ...(await Promise.all(obj.list.map(async e => {

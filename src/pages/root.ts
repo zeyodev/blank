@@ -2,6 +2,8 @@ import Z, { Zeyo } from "zeyo";
 import Page from ".";
 import CardSimple from "../component/cardSimple";
 import ListaHorizontal from "../component/listaHorizontal";
+import FormItem from "../features/item/form";
+import Modal from "../modal";
 
 export default class Root extends Page {
     route: string = "/"
@@ -14,14 +16,17 @@ export default class Root extends Page {
         const [itens, horizontal] = new ListaHorizontal(this.app, CardSimple).watch({
             adapter: "item",
             title: "Itens",
-            list: ([] as {title: string, description: string}[])
+            list: ([] as { title: string, description: string }[])
         })
-        itens.list.push({title: "Teste0", description: "Testando lista"})
-        itens.list.push({title: "Teste1", description: "Testando lista"})
-        itens.list.push({title: "Teste2", description: "Testando lista"})
+        itens.list.push({ title: "Teste0", description: "Testando lista" })
+        itens.list.push({ title: "Teste1", description: "Testando lista" })
+        itens.list.push({ title: "Teste2", description: "Testando lista" })
         return this.main = Z("main").children(
             Z("h1").text("Inicio de tudo"),
-            await horizontal.create(itens)
+            Z("button").text("Add").click(() =>
+                Modal.show(this.app, new FormItem({ title: "", description: "" }, itens))
+            ),
+            await horizontal.create(itens),
         )
     }
 }
