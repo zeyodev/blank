@@ -2,13 +2,13 @@ import Controllers from "../../interface/controller/_list"
 import Z, { Zeyo } from "zeyo"
 import Modal from "../../modal"
 import FormElement from "./_element"
-import { Field } from "../field"
+import { Fields } from "../field"
 import Form from ".."
 
 export default class ComponentForm {
     main: Zeyo = Z("form")
-    properties: { [key: string]: FormElement } = {}
-    fields: { [key: string]: Field } = {}
+    properties: { [key: string]: FormElement<keyof HTMLElementTagNameMap> } = {}
+    fields: Fields = {}
     async create(form: Form) {
         this.properties = {}
         this.fields = await form.getFields()
@@ -17,7 +17,7 @@ export default class ComponentForm {
             Z("div").class("d-grid", "gap-m","o-auto").children(
                 Z("h2").object(e => e.element.innerText = form.title),
                 ...Object.keys(this.fields).map(k => {
-                    console.log(this.fields[k])
+                    //console.log(this.fields[k])
                     const z = this.fields[k].create(k)
                     this.fields[k].setValue(form.model[k])
                     this.fields[k].element.element.id = k
@@ -31,7 +31,7 @@ export default class ComponentForm {
                         footer.push(Z("button").text(form.footer.back).click(() => {
                             console.log("aqui tem que voltar no modal");
                             Modal.back()
-                        }).class("aux").atrib("type", "button"))
+                        }).class("aux").attribute("type", "button"))
 
                     if (form.footer.next !== "none")
                         footer.push(Z("button").text(form.footer.next))
@@ -40,19 +40,7 @@ export default class ComponentForm {
             )
         ).object(z => z.element.onsubmit = e => {
             e.preventDefault()
-            console.log(this.properties)
-            console.log(this.fields)
-            for (const key in this.fields) {
-                if (Object.prototype.hasOwnProperty.call(form.model, key))
-                    form.model[key] = this.fields[key].getValue() //isso tem que mudar e retornar fields como na linha de baixo
-                else form.data[key] = this.fields[key].getValue()
-            }
-            form.fields = this.fields
-            console.log(form);
-            console.log(Controllers.list);
-            console.log(Controllers.list[form.controller]);
-            /* TODO: tenho que desacoplar o form do controller, deixar para o objeto form decidir  */
-            new Controllers.list[form.controller]({}).execute(form)
+            form.onSubmit(this.fields)
         })
 
     }

@@ -2,20 +2,20 @@ import Z, { Zeyo } from "zeyo"
 import GetValue from "./properties/getValue"
 import SetValue from "./properties/setValue"
 import FormElement from "./_element"
-import {Fields} from "./_list"
+import {FieldList} from "./_list"
 
-export default class Password extends SetValue(GetValue(FormElement)) {
+export default class Password extends SetValue(GetValue(FormElement<"input">)) {
     extra: string[] = []
     constructor(label: string, placeholder: string) {
-        super("password", label, placeholder)
+        super("input", label, placeholder)
     }
     create(): Zeyo {
-        this.element.atrib("type", this.type).atrib("placeholder", this.placeholder)
+        this.element.attribute("type", this.type).attribute("placeholder", this.placeholder)
         return Z("div").class("d-grid", "gap-p").children(
             Z("label").object(e => e.element.innerText = this.label),
             this.element,
             //TODO: tem que criar um campo extra para criar mais opcoes no campo
-            ...this.extra.map(k =>{ return new Fields.list[k]().create() })
+            ...this.extra.map(k =>{ return new FieldList.list[k]().create() })
         )
     }
 }

@@ -1,18 +1,20 @@
+import App from "../../app";
 import Form from "../../form";
-import { Build, Field } from "../../form/field";
+import { Field, Fields } from "../../form/field";
+import CreateItem from "./controllers/createItem";
 
 export default class FormItem extends Form {
     model: any;
     lista: any
-    constructor(/* repository: Repository,  */model: any, lista: any) {
-        super(model, "Criar Página", "createitem", {back: "none", next: "Criar"})
+    constructor(app: App, model: any, lista: any) {
+        super(model, "Criar Página", new CreateItem(app), {back: "none", next: "Criar"})
         this.model = model
         this.lista = lista
     }
-    async getFields(): Promise<{ [key: string]: Field }> {
+    async getFields(): Promise<Fields> {
         return {
-            "title": Build.field("text", "Título", "Estou super empolgado"),
-            "description": Build.field("text", "Descricão", "Para aprender muito mais sobre o encrivel framework da Zeyo"),
+            "title": Field.make("text", "Título", "Estou super empolgado"),
+            "description": Field.make("text", "Descricão", "Para aprender muito mais sobre o encrivel framework da Zeyo"),
         }
     }
 }

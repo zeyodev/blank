@@ -1,19 +1,15 @@
 import Z, { Zeyo } from "zeyo"
-import GetValue from "./properties/getValue"
+import GetValueText from "./properties/getValueText"
+import SetValueText from "./properties/setValueText"
 import FormElement from "./_element"
-
-export default class Show extends GetValue(FormElement) {
+export default class Show extends SetValueText(GetValueText(FormElement<"p">)) {
     constructor(label: string) {
-        super("text", label, "")
+        super("p", label, "")
     }
     create(key: string): Zeyo {
-        this.element = Z("p").class("show")
         return Z("div").class("d-grid", "gap-p").children(
-            Z("label").text(this.label).atribs({"for": key}),
-            this.element,
+            Z("label").text(this.label).attributes({ "for": key }),
+            this.element.class("show"),
         )
-    }
-    setValue(value: any) {
-        this.element.element.innerText = value
     }
 }

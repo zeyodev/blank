@@ -1,12 +1,12 @@
-import Z, { Zeyo } from "zeyo"
+import Z, { Zeyo, ZeyoAs } from "zeyo"
 import FormElement from "./_element"
 
-export default class DateTime extends FormElement {
+export default class DateTime extends FormElement<"input"> {
     constructor(label: string, placeholder: string) {
-        super("text", label, placeholder)
+        super("input", label, placeholder)
     }
     create(): Zeyo {
-        this.element = Z("input").atrib("type", this.type).atrib("placeholder", this.placeholder)
+        this.element = Z("input").attribute("type", this.type).attribute("placeholder", this.placeholder)
         return Z("div").class("d-grid", "gap-p").children(
             Z("label").object(e => e.element.innerText = this.label),
             this.element,
@@ -14,14 +14,12 @@ export default class DateTime extends FormElement {
     }
 
     getValue() {
-        const e: any = this.element.element
-        return new Date(e.value)
+        return new Date(this.element.element.value)
     }
 
     setValue(value: Date) {
-        const e: any = this.element.element
         const str: string = typeof value === "string" ? value: value.toISOString()
         const d = new Date(str)
-        e.value = `${d.toLocaleDateString().split("/").reverse().join("-")} ${d.toLocaleTimeString().replace(/[A-Z ]/g,"")}`
+        this.element.element.value = `${d.toLocaleDateString().split("/").reverse().join("-")} ${d.toLocaleTimeString().replace(/[A-Z ]/g,"")}`
     }
 }

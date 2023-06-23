@@ -5,7 +5,7 @@ import GetValue from "./properties/getValue"
 import SetValue from "./properties/setValue"
 import FormElement from "./_element"
 
-export default class Checkbox extends SetValue(GetValue(FormElement)) {
+export default class Checkbox extends SetValue(GetValue(FormElement<"input">)) {
     main: Zeyo = Z("div")
     list: any[] = []
     /**
@@ -15,15 +15,15 @@ export default class Checkbox extends SetValue(GetValue(FormElement)) {
      * @param list 
      */
     constructor(label: string, placeholder: string, list: any[]) {
-        super("text", label, placeholder)
+        super("input", label, placeholder)
     }
     create(key: string): Zeyo {
         //this.style()
         console.log(this)
-        this.element = Z("input").atribs({
+        this.element = Z("input").attributes({
             "id": key,
             "type": this.type
-        }).atrib("placeholder", this.placeholder).click(() => {
+        }).attribute("placeholder", this.placeholder).click(() => {
             const value = this.getValue()
             const all = this.list[0]
             value ?
@@ -55,12 +55,12 @@ export default class Checkbox extends SetValue(GetValue(FormElement)) {
                 this.element,
                 Z("span").class("checkmark")
             ),
-            Z("label").text(this.label).atribs({ "for": key }),
+            Z("label").text(this.label).attributes({ "for": key }),
         )
     }
 
     getValue() {
-        return (this.element.element as HTMLInputElement).checked
+        return this.element.element.checked
     }
 
     /* TODO: tem que pensar numa forma melhor de usar o style junto com o codigo */

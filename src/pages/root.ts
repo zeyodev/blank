@@ -24,7 +24,7 @@ export default class Root extends Page {
         return this.main = Z("main").children(
             Z("h1").text("Inicio de tudo"),
             Z("button").text("Add").click(() =>
-                Modal.show(this.app, new FormItem({ title: "", description: "" }, itens))
+                Modal.show(this.app, new FormItem(this.app, { title: "", description: "" }, itens))
             ),
             await horizontal.create(itens),
         )

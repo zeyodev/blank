@@ -13,10 +13,12 @@ interface Adapter {
     getFields(): Promise<{ [index: string]: any }>
 }
 //export type List = Array<{ value: string; name: string } | Adapter>
-export type NameValueList = Array<{ value: string; name: string }>
+export type NameValue = { value: string; name: string }
+export type NameValueList = Array<NameValue>
 //Action se retornar true faz acao normal, se false retorna um. Só esta funcionando no ObjectV
 export type returns = "object" | "none" | "back" | "refresh" | "begin"
 export type ActionFunction = (o?: any) => void
+export type ActionFunctionType<T> = (o: T) => void
 export type Action2 = (o?: any) => Promise<returns> | returns
 
 export interface FieldsTypes {
@@ -93,7 +95,11 @@ export interface List {
     "option": Option
     "checkbox": Checkbox
 }
-
+interface TObjects {
+    valueName: {value: string; name: string}
+    adapter: Adapter
+}
+type TObjectV<T extends keyof TObjects> = [list: TObjects[T][], action?: ActionFunctionType<TObjects[T]>, label?: string]
 export interface ListMatriz {
     "text": [label: string, placeholder: string];
     "show": [label: string];
@@ -101,7 +107,8 @@ export interface ListMatriz {
     "datetime-local": [label: string, placeholder: string]
     "password": [label: string, placeholder: string]
     "esqueci": [label: string, placeholder: string]
-    "objectv": [label: string, list: any[], action?: ActionFunction]
+    "objectv": [list: any[], action?: ActionFunction, label?: string]
+    "objectva": TObjectV<"adapter">
     "objecth": [label: string, list: Adapter[], action?: ActionFunction]
     "select": [label: string, list: {value: string, name: string}[]]
     "button": [label: string, action?: ActionFunction]
@@ -109,7 +116,7 @@ export interface ListMatriz {
     "checkbox": [label: string, placeholder: string]
 }
 
-export class Fields {
+export class FieldList {
     static list: { [key: string]: any } = {
         "text": Input,
         "show": Show,
