@@ -1,8 +1,5 @@
 import App from "./app";
-import Root from "./pages/root";
-import Route from "./router/_route";
+import Root from "./states/_root";
 
 const app = new App()
-app.setRepository({})
-    .setPages(Root)
-    .setRouter(new Route(app))
+app.setNavgation({}, Root, app)

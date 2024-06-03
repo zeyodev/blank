@@ -1,6 +1,7 @@
-import { Childrens, Options, StateBase, StateOptions } from "../../navigation/state"
+import { Childrens, Options, StateBase, StateOptions } from "../../plugins/navigation/state"
 import ComponenteGenerico from "../propriedades/componente"
 import ParametrosGenerico from "../propriedades/parametrosGenerico"
+import RootPage from "./page"
 
 export default class Root extends ComponenteGenerico(ParametrosGenerico(StateBase)){
     childrens: Childrens
@@ -15,14 +16,17 @@ export default class Root extends ComponenteGenerico(ParametrosGenerico(StateBas
         route: "/account",
         param: {}
     }]
-    page?: any
+    page = RootPage
     constructor(childrens: Childrens, page?: any) {
         super()
         this.childrens = childrens
-        this.page = page
     }
 
     async setup() {
         
     }
+    setParametros(route: string[]): string[] {
+        return []
+    }
+    parametros: {[key: string]: string} = {}
 }

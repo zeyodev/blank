@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/zeyodev/blank#readme",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "socket.io-client": "^4.6.1",
     "zeyo": "github:zeyodev/zeyo"
   },
   "type": "module",

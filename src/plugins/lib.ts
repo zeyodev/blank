@@ -1,4 +1,3 @@
-/* Isso tera que ficar na biblioteca, pois sera a raiz do objeto App*/
 export class Root {
     root: HTMLElement
     constructor(){

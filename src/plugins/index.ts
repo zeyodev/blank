@@ -1,9 +1,5 @@
-import Hash from "./hash";
+import HashPlugin from "./hash/plugin";
 import { Root } from "./lib";
-import Navigation from "./navigation";
-import Pages from "./page";
-import Repository from "./repository";
-import Route from "./route";
-import Socketio from "./socket";
+import Navigation from "./navigation/plugin";
 
-export default class Plugins extends Socketio(Hash(Navigation(Repository(Route(Pages(Root)))))) {}
+export default class Plugins extends Navigation(HashPlugin(Root)) {}
